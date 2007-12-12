@@ -1,0 +1,11 @@
+--- gtk-vnc-0.3.0/src/Makefile.am~	2007-12-12 15:57:44.000000000 +0100
++++ gtk-vnc-0.3.0/src/Makefile.am	2007-12-12 23:02:18.326108552 +0100
+@@ -47,7 +47,7 @@
+ DEFSDIR = $(shell pkg-config --variable=defsdir pygtk-2.0)
+ 
+ vnc.defs: vncdisplay.h
+-	$(PYTHON) $(CODEGENDIR)/h2def.py $< > $@
++	$(PYTHON) $(CODEGENDIR)/h2def.pyc $< > $@
+ 
+ vncmodule.defs.c: vnc.override vnc.defs
+ 	pygtk-codegen-2.0 --prefix gtkvnc \
