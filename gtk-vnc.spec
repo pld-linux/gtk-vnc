@@ -22,7 +22,7 @@ threaded.
 Summary:	Libraries, includes, etc. to compile with the gtk-vnc library
 Group:		Development/Libraries
 Requires:	%{name} = %{version}
-Requires:	gtk2+-devel
+Requires:	gtk+2-devel
 Requires:	python-pygtk-devel
 
 %description devel
