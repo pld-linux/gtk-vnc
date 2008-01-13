@@ -3,18 +3,20 @@ Summary(pl.UTF-8):	Widget GTK+ dla klientów VNC
 Name:		gtk-vnc
 Version:	0.3.0
 Release:	1
-License:	LGPL
+License:	LGPL v2
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/gtk-vnc/%{name}-%{version}.tar.gz
 # Source0-md5:	6ef6cd8862ba4edd797fe4df48db647d
 Patch0:		%{name}-codegen.patch
 URL:		http://gtk-vnc.sourceforge.net/
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
-BuildRequires:	gtk+2-devel
+BuildRequires:	gnutls-devel >= 1.4.0
+BuildRequires:	gtk+2-devel >= 1:2.0.0
 BuildRequires:	libtool
-BuildRequires:	python-devel
-BuildRequires:	python-pygtk-devel
+BuildRequires:	pkgconfig
+BuildRequires:	python-devel >= 1:2.4
+BuildRequires:	python-pygtk-devel >= 2:2.0.0
 BuildRequires:	rpm-pythonprov
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -33,14 +35,26 @@ Summary:	Header files for gtk-vnc library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki gtk-vnc
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	gtk+2-devel
-Requires:	python-pygtk-devel
+Requires:	gnutls-devel >= 1.4.0
+Requires:	gtk+2-devel >= 1:2.0.0
 
 %description devel
 Header files for gtk-vnc library.
 
 %description devel -l pl.UTF-8
 Pliki nagłówkowe biblioteki gtk-vnc.
+
+%package static
+Summary:	Static gtk-vnc library
+Summary(pl.UTF-8):	Statyczna biblioteka gtk-vnc
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+
+%description static
+Static gtk-vnc library.
+
+%description static -l pl.UTF-8
+Statyczna biblioteka gtk-vnc.
 
 %package -n python-gtk-vnc
 Summary:	Python bindings for the gtk-vnc library
@@ -73,34 +87,39 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-rm -f $RPM_BUILD_ROOT%{_libdir}/*.a
+install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version} \
+	$RPM_BUILD_ROOT%{_examplesdir}/python-%{name}-%{version}
+
+install examples/gvncviewer.c $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+install examples/gvncviewer.py $RPM_BUILD_ROOT%{_examplesdir}/python-%{name}-%{version}
+
 rm -f $RPM_BUILD_ROOT%{py_sitedir}/*.{la,a}
 
 %clean
 rm -fr $RPM_BUILD_ROOT
 
-%post
-/sbin/ldconfig
-
-%postun
-/sbin/ldconfig
+%post	-p /sbin/ldconfig
+%postun	-p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog NEWS README COPYING.LIB
-%attr(755,root,root) %{_libdir}/lib*.so.*
+%doc AUTHORS ChangeLog NEWS README
+%attr(755,root,root) %{_libdir}/libgtk-vnc-1.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgtk-vnc-1.0.so.0
 
 %files devel
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog NEWS README COPYING.LIB
-%doc examples/gvncviewer.c
-%attr(755,root,root) %{_libdir}/lib*.so
-%{_libdir}/lib*.la
-%dir %{_includedir}/%{name}-1.0
-%{_includedir}/%{name}-1.0/*.h
+%attr(755,root,root) %{_libdir}/libgtk-vnc-1.0.so
+%{_libdir}/libgtk-vnc-1.0.la
+%{_includedir}/%{name}-1.0
 %{_pkgconfigdir}/%{name}-1.0.pc
+%{_examplesdir}/%{name}-%{version}
+
+%files static
+%defattr(644,root,root,755)
+%{_libdir}/libgtk-vnc-1.0.a
 
 %files -n python-gtk-vnc
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog NEWS README COPYING.LIB examples/gvncviewer.py
-%{py_sitedir}/gtkvnc.so
+%attr(755,root,root) %{py_sitedir}/gtkvnc.so
+%{_examplesdir}/python-%{name}-%{version}
