@@ -2,7 +2,7 @@ Summary:	A GTK+ widget for VNC clients
 Summary(pl.UTF-8):	Widget GTK+ dla klientów VNC
 Name:		gtk-vnc
 Version:	0.3.0
-Release:	1
+Release:	2
 License:	LGPL v2
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/gtk-vnc/%{name}-%{version}.tar.gz
