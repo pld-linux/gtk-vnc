@@ -1,23 +1,24 @@
 Summary:	A GTK+ widget for VNC clients
 Summary(pl.UTF-8):	Widget GTK+ dla klientów VNC
 Name:		gtk-vnc
-Version:	0.3.7
-Release:	4
+Version:	0.3.8
+Release:	1
 License:	LGPL v2
-Group:		Libraries
-Source0:	http://dl.sourceforge.net/gtk-vnc/%{name}-%{version}.tar.gz
-# Source0-md5:	41c613be4b554b71d63d30f844d60add
+Group:		X11/Libraries
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk-vnc/0.3/%{name}-%{version}.tar.bz2
+# Source0-md5:	7c7b07a868568206acd3f6e9e4d18ba1
 Patch0:		%{name}-codegen.patch
-URL:		http://gtk-vnc.sourceforge.net/
+URL:		http://live.gnome.org/gtk-vnc
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	gnutls-devel >= 1.4.0
-BuildRequires:	gtk+2-devel >= 1:2.0.0
+BuildRequires:	gtk+2-devel >= 2:2.10.0
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
 BuildRequires:	python-devel >= 1:2.4
 BuildRequires:	python-pygtk-devel >= 2:2.0.0
 BuildRequires:	rpm-pythonprov
+BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -33,10 +34,10 @@ pozostając jednowątkowymi.
 %package devel
 Summary:	Header files for gtk-vnc library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki gtk-vnc
-Group:		Development/Libraries
+Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	gnutls-devel >= 1.4.0
-Requires:	gtk+2-devel >= 1:2.0.0
+Requires:	gtk+2-devel >= 2:2.10.0
 
 %description devel
 Header files for gtk-vnc library.
@@ -47,7 +48,7 @@ Pliki nagłówkowe biblioteki gtk-vnc.
 %package static
 Summary:	Static gtk-vnc library
 Summary(pl.UTF-8):	Statyczna biblioteka gtk-vnc
-Group:		Development/Libraries
+Group:		X11/Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
@@ -75,8 +76,9 @@ Moduł pozwalający na używanie widgetu GTK+ VNC z poziomu Pythona.
 
 %build
 %{__libtoolize}
-%{__aclocal}
+%{__aclocal} -I gnulib/m4
 %{__autoconf}
+%{__autoheader}
 %{__automake}
 %configure
 %{__make}
