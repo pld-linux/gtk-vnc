@@ -1,12 +1,12 @@
 Summary:	A GTK+ widget for VNC clients
 Summary(pl.UTF-8):	Widget GTK+ dla klientów VNC
 Name:		gtk-vnc
-Version:	0.3.8
-Release:	3
+Version:	0.3.9
+Release:	1
 License:	LGPL v2
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk-vnc/0.3/%{name}-%{version}.tar.bz2
-# Source0-md5:	7c7b07a868568206acd3f6e9e4d18ba1
+# Source0-md5:	18cbf50b393fea57b691987e5ea62259
 Patch0:		%{name}-codegen.patch
 URL:		http://live.gnome.org/gtk-vnc
 BuildRequires:	autoconf >= 2.50
