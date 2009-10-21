@@ -1,18 +1,21 @@
 Summary:	A GTK+ widget for VNC clients
 Summary(pl.UTF-8):	Widget GTK+ dla klientów VNC
 Name:		gtk-vnc
-Version:	0.3.9
+Version:	0.3.10
 Release:	1
 License:	LGPL v2
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk-vnc/0.3/%{name}-%{version}.tar.bz2
-# Source0-md5:	18cbf50b393fea57b691987e5ea62259
+# Source0-md5:	9aa9d830b219255c8d6753ef55802932
 Patch0:		%{name}-codegen.patch
 URL:		http://live.gnome.org/gtk-vnc
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
+BuildRequires:	cyrus-sasl-devel
+BuildRequires:	gettext-devel
 BuildRequires:	gnutls-devel >= 1.4.0
 BuildRequires:	gtk+2-devel >= 2:2.10.0
+BuildRequires:	intltool >= 0.35.0
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
 BuildRequires:	python-devel >= 1:2.4
@@ -97,13 +100,15 @@ install examples/gvncviewer.py $RPM_BUILD_ROOT%{_examplesdir}/python-%{name}-%{v
 
 rm -f $RPM_BUILD_ROOT%{py_sitedir}/*.{la,a}
 
+%find_lang %{name}
+
 %clean
 rm -fr $RPM_BUILD_ROOT
 
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
-%files
+%files -f %{name}.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README
 %attr(755,root,root) %{_libdir}/libgtk-vnc-1.0.so.*.*.*
