@@ -1,9 +1,10 @@
---- gtk-vnc-0.3.0/src/Makefile.am~	2007-12-12 15:57:44.000000000 +0100
-+++ gtk-vnc-0.3.0/src/Makefile.am	2007-12-12 23:02:18.326108552 +0100
-@@ -47,7 +47,7 @@
+diff -urN gtk-vnc-0.3.10/src/Makefile.am gtk-vnc-0.3.10.new/src/Makefile.am
+--- gtk-vnc-0.3.10/src/Makefile.am	2009-09-17 15:16:10.000000000 +0200
++++ gtk-vnc-0.3.10.new/src/Makefile.am	2009-10-21 20:37:48.351232943 +0200
+@@ -90,7 +90,7 @@
  DEFSDIR = $(shell pkg-config --variable=defsdir pygtk-2.0)
  
- vnc.defs: vncdisplay.h
+ vnc.defs: vncdisplay.h enums.h
 -	$(PYTHON) $(CODEGENDIR)/h2def.py $< > $@
 +	$(PYTHON) $(CODEGENDIR)/h2def.pyc $< > $@
  
