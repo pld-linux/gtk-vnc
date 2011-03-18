@@ -2,7 +2,7 @@ Summary:	A GTK+ widget for VNC clients
 Summary(pl.UTF-8):	Widget GTK+ dla klientów VNC
 Name:		gtk-vnc
 Version:	0.4.3
-Release:	2
+Release:	3
 License:	LGPL v2
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk-vnc/0.4/%{name}-%{version}.tar.bz2
@@ -169,7 +169,7 @@ Moduł pozwalający na używanie widgetu GTK+ VNC z poziomu Pythona.
 Summary:	Command line tools for VNC
 Summary(pl.UTF-8):	Narzędzia linii poleceń dla VNC
 Group:		Applications/Networking
-Requires:	%{name} = %{version}-%{release}
+Requires:	libgvnc = %{version}-%{release}
 
 %description tools
 Command line utilities for interacting with VNC servers.
