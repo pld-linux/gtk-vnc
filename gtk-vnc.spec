@@ -2,7 +2,7 @@ Summary:	A GTK+ widget for VNC clients
 Summary(pl.UTF-8):	Widget GTK+ dla klientów VNC
 Name:		gtk-vnc
 Version:	0.4.3
-Release:	3
+Release:	4
 License:	LGPL v2
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk-vnc/0.4/%{name}-%{version}.tar.bz2
@@ -237,6 +237,12 @@ rm -rf $RPM_BUILD_ROOT
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
+%post -n gtk3-vnc -p /sbin/ldconfig
+%postun -n gtk3-vnc -p /sbin/ldconfig
+
+%post -n libgvnc -p /sbin/ldconfig
+%postun -n libgvnc -p /sbin/ldconfig
+
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libgtk-vnc-1.0.so.*.*.*
@@ -257,8 +263,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n gtk3-vnc
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libgtk-vnc-2.0.so.0
-%attr(755,root,root) %{_libdir}/libgtk-vnc-2.0.so.0.0.2
+%attr(755,root,root) %{_libdir}/libgtk-vnc-2.0.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgtk-vnc-2.0.so.0
 %{_libdir}/girepository-1.0/GtkVnc-2.0.typelib
 
 %files -n gtk3-vnc-devel
