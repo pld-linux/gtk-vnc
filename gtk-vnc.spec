@@ -36,7 +36,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	python-devel >= 1:2.4
 BuildRequires:	python-pygtk-devel >= 2:2.0.0
 BuildRequires:	rpm-pythonprov
-%{?with_vala:BuildRequires:	vala}
+%{?with_vala:BuildRequires:	vala >= 0.14.0}
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	zlib-devel
 Requires:	libgvnc = %{version}-%{release}
