@@ -5,12 +5,12 @@
 Summary:	A GTK+ widget for VNC clients (GTK+ 2.x version)
 Summary(pl.UTF-8):	Widget GTK+ dla klientów VNC (wersja dla GTK+ 2.x)
 Name:		gtk-vnc
-Version:	0.4.4
-Release:	3
+Version:	0.5.2
+Release:	0.1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk-vnc/0.4/%{name}-%{version}.tar.bz2
-# Source0-md5:	0c51bcbdf1530c4856f49ace7c8f709a
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk-vnc/0.5/%{name}-%{version}.tar.xz
+# Source0-md5:	591f5c0efff931336cba5b56e0c64e0d
 Patch0:		%{name}-codegen.patch
 Patch1:		%{name}-libtool.patch
 URL:		http://live.gnome.org/gtk-vnc
@@ -36,12 +36,14 @@ BuildRequires:	pkgconfig
 BuildRequires:	python-devel >= 1:2.4
 BuildRequires:	python-pygtk-devel >= 2:2.0.0
 BuildRequires:	rpm-pythonprov
-%{?with_vala:BuildRequires:	vala >= 0.14.0}
+BuildRequires:	tar >= 1:1.22
+%{?with_vala:BuildRequires:	vala:BuildRequires:	vala >= 0.14.0}
 BuildRequires:	xorg-lib-libX11-devel
+BuildRequires:	xz
 BuildRequires:	zlib-devel
-Requires:	libgvnc = %{version}-%{release}
 Requires:	cairo >= 1.2.0
 Requires:	gtk+2 >= 2:2.18.0
+Requires:	libgvnc = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -63,10 +65,10 @@ Summary:	Header files for gtk-vnc library (GTK+ 2.x version)
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki gtk-vnc (wersja dla GTK+ 2.x)
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	libgvnc-devel = %{version}-%{release}
 Requires:	cairo-devel >= 1.2.0
 Requires:	gnutls-devel >= 1.4.0
 Requires:	gtk+2-devel >= 2:2.18.0
+Requires:	libgvnc-devel = %{version}-%{release}
 Requires:	xorg-lib-libX11-devel
 
 %description devel
@@ -107,9 +109,9 @@ z poziomu Pythona.
 Summary:	A GTK+ widget for VNC clients (GTK+ 3.x version)
 Summary(pl.UTF-8):	Widget GTK+ dla klientów VNC
 Group:		X11/Libraries
-Requires:	libgvnc = %{version}-%{release}
 Requires:	cairo >= 1.2.0
 Requires:	gtk+3 >= 3.0.0
+Requires:	libgvnc = %{version}-%{release}
 
 %description -n gtk3-vnc
 gtk-vnc is a VNC viewer widget for GTK+. It is built using coroutines
@@ -171,8 +173,8 @@ API języka Vala dla biblioteki gtk-vnc (wersja dla GTK+3).
 Summary:	A library for VNC clients
 Summary(pl.UTF-8):	Biblioteka dla klientów VNC
 Group:		X11/Libraries
-Requires:	glib2 >= 1:2.28.0
 Requires:	gdk-pixbuf2 >= 2.10.0
+Requires:	glib2 >= 1:2.28.0
 Requires:	gnutls >= 1.4.0
 
 %description -n libgvnc
@@ -185,12 +187,12 @@ Biblioteka dla klientów VNC.
 Summary:	Header files for libgvnc library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki libgvnc
 Group:		X11/Development/Libraries
-Requires:	libgvnc = %{version}-%{release}
 Requires:	cyrus-sasl-devel
-Requires:	glib2-devel >= 1:2.28.0
 Requires:	gdk-pixbuf2-devel >= 2.10.0
+Requires:	glib2-devel >= 1:2.28.0
 Requires:	gnutls-devel >= 1.4.0
 Requires:	libgcrypt-devel
+Requires:	libgvnc = %{version}-%{release}
 Requires:	zlib-devel
 
 %description -n libgvnc-devel
@@ -281,7 +283,7 @@ install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version} \
 	$RPM_BUILD_ROOT%{_examplesdir}/python-%{name}-%{version}
 
 install examples/gvncviewer.{c,js} $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
-install examples/gvncviewer.py $RPM_BUILD_ROOT%{_examplesdir}/python-%{name}-%{version}
+install examples/gvncviewer-{bindings,introspection}.py $RPM_BUILD_ROOT%{_examplesdir}/python-%{name}-%{version}
 
 %{__rm} $RPM_BUILD_ROOT%{py_sitedir}/*.{la,a} \
 	$RPM_BUILD_ROOT%{_libdir}/*.la
@@ -351,24 +353,33 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README
 %attr(755,root,root) %{_libdir}/libgvnc-1.0.so.*.*.*
+%attr(755,root,root) %{_libdir}/libgvncpulse-1.0.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libgvnc-1.0.so.0
+%attr(755,root,root) %ghost %{_libdir}/libgvncpulse-1.0.so.0
 %{_libdir}/girepository-1.0/GVnc-1.0.typelib
+%{_libdir}/girepository-1.0/GVncPulse-1.0.typelib
 
 %files -n libgvnc-devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libgvnc-1.0.so
+%attr(755,root,root) %{_libdir}/libgvncpulse-1.0.so
 %{_datadir}/gir-1.0/GVnc-1.0.gir
+%{_datadir}/gir-1.0/GVncPulse-1.0.gir
 %{_includedir}/gvnc-1.0
+%{_includedir}/gvncpulse-1.0
 %{_pkgconfigdir}/gvnc-1.0.pc
+%{_pkgconfigdir}/gvncpulse-1.0.pc
 
 %files -n libgvnc-static
 %defattr(644,root,root,755)
 %{_libdir}/libgvnc-1.0.a
+%{_libdir}/libgvncpulse-1.0.a
 
 %if %{with vala}
 %files -n vala-libgvnc
 %defattr(644,root,root,755)
 %{_datadir}/vala/vapi/gvnc-1.0.vapi
+%{_datadir}/vala/vapi/gvncpulse-1.0.vapi
 %endif
 
 %files tools
