@@ -28,16 +28,18 @@ BuildRequires:	gtk+2-devel >= 2:2.18.0
 BuildRequires:	gtk+3-devel >= 3.0.0
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	libgcrypt-devel
+BuildRequires:	libgpg-error-devel
 BuildRequires:	libtool >= 2:2.2.6
 BuildRequires:	libview-devel >= 0.6.0
 BuildRequires:	perl-Text-CSV
 BuildRequires:	perl-tools-pod
 BuildRequires:	pkgconfig
+BuildRequires:	pulseaudio-devel
 BuildRequires:	python-devel >= 1:2.4
 BuildRequires:	python-pygtk-devel >= 2:2.0.0
 BuildRequires:	rpm-pythonprov
 BuildRequires:	tar >= 1:1.22
-%{?with_vala:BuildRequires:	vala:BuildRequires:	vala >= 0.14.0}
+%{?with_vala:BuildRequires:	vala >= 0.14.0}
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xz
 BuildRequires:	zlib-devel
