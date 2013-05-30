@@ -6,7 +6,7 @@ Summary:	A GTK+ widget for VNC clients (GTK+ 2.x version)
 Summary(pl.UTF-8):	Widget GTK+ dla klientów VNC (wersja dla GTK+ 2.x)
 Name:		gtk-vnc
 Version:	0.5.2
-Release:	1
+Release:	2
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk-vnc/0.5/%{name}-%{version}.tar.xz
@@ -97,7 +97,6 @@ Summary:	Python bindings for the gtk-vnc library (GTK+ 2.x version)
 Summary(pl.UTF-8):	Wiązania Pythona do biblioteki gtk-vnc (wersja dla GTK+ 2.x)
 Group:		Libraries/Python
 Requires:	%{name} = %{version}-%{release}
-%requires_eq	python-libs
 
 %description -n python-gtk-vnc
 A module allowing use of the GTK+ VNC widget (GTK+ 2.x version) from
