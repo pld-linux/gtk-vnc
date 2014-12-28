@@ -19,7 +19,7 @@ BuildRequires:	automake >= 1:1.10
 BuildRequires:	cairo-devel >= 1.2.0
 BuildRequires:	cyrus-sasl-devel
 BuildRequires:	gdk-pixbuf2-devel >= 2.10.0
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.28.0
 BuildRequires:	gnome-common
 BuildRequires:	gnutls-devel >= 1.4.0
