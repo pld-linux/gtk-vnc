@@ -5,14 +5,13 @@
 Summary:	A GTK+ widget for VNC clients (GTK+ 2.x version)
 Summary(pl.UTF-8):	Widget GTK+ dla klientów VNC (wersja dla GTK+ 2.x)
 Name:		gtk-vnc
-Version:	0.5.3
-Release:	2
+Version:	0.5.4
+Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk-vnc/0.5/%{name}-%{version}.tar.xz
-# Source0-md5:	1dccd918a4d633020e4afaf6c9352cde
+# Source0-md5:	bc7b79c4b8124294dacf91b8128a158c
 Patch0:		%{name}-codegen.patch
-Patch1:		%{name}-libtool.patch
 URL:		http://live.gnome.org/gtk-vnc
 BuildRequires:	autoconf >= 2.63
 BuildRequires:	automake >= 1:1.10
@@ -27,7 +26,7 @@ BuildRequires:	gobject-introspection-devel >= 0.9.4
 BuildRequires:	gtk+2-devel >= 2:2.18.0
 BuildRequires:	gtk+3-devel >= 3.0.0
 BuildRequires:	intltool >= 0.40.0
-BuildRequires:	libgcrypt-devel
+BuildRequires:	libgcrypt-devel >= 1.4.0
 BuildRequires:	libgpg-error-devel
 BuildRequires:	libtool >= 2:2.2.6
 BuildRequires:	libview-devel >= 0.6.0
@@ -68,7 +67,6 @@ Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki gtk-vnc (wersja dla GTK+ 2.x)
 Group:		X11/Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	cairo-devel >= 1.2.0
-Requires:	gnutls-devel >= 1.4.0
 Requires:	gtk+2-devel >= 2:2.18.0
 Requires:	libgvnc-devel = %{version}-%{release}
 Requires:	xorg-lib-libX11-devel
@@ -135,6 +133,7 @@ Group:		X11/Development/Libraries
 Requires:	cairo-devel >= 1.2.0
 Requires:	gtk+3-devel >= 3.0.0
 Requires:	gtk3-vnc = %{version}-%{release}
+Requires:	libgcrypt-devel >= 1.4.0
 Requires:	libgvnc-devel = %{version}-%{release}
 Requires:	xorg-lib-libX11-devel
 
@@ -177,6 +176,7 @@ Group:		X11/Libraries
 Requires:	gdk-pixbuf2 >= 2.10.0
 Requires:	glib2 >= 1:2.28.0
 Requires:	gnutls >= 1.4.0
+Requires:	libgcrypt >= 1.4.0
 
 %description -n libgvnc
 A library for VNC clients.
@@ -192,7 +192,7 @@ Requires:	cyrus-sasl-devel
 Requires:	gdk-pixbuf2-devel >= 2.10.0
 Requires:	glib2-devel >= 1:2.28.0
 Requires:	gnutls-devel >= 1.4.0
-Requires:	libgcrypt-devel
+Requires:	libgcrypt-devel >= 1.4.0
 Requires:	libgvnc = %{version}-%{release}
 Requires:	zlib-devel
 
@@ -242,7 +242,6 @@ Narzędzia linii poleceń do interakcji z serwerami VNC.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 %{__libtoolize}
