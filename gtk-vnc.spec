@@ -1,12 +1,12 @@
 #
 # Conditional build:
 %bcond_without	vala	# Vala API
-#
+
 Summary:	A GTK+ widget for VNC clients (GTK+ 2.x version)
 Summary(pl.UTF-8):	Widget GTK+ dla klientów VNC (wersja dla GTK+ 2.x)
 Name:		gtk-vnc
 Version:	0.5.4
-Release:	2
+Release:	3
 License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk-vnc/0.5/%{name}-%{version}.tar.xz
@@ -162,6 +162,9 @@ Summary(pl.UTF-8):	API języka Vala dla biblioteki gtk-vnc (wersja dla GTK+3)
 Group:		Development/Languages
 Requires:	gtk3-vnc-devel = %{version}-%{release}
 Requires:	vala-libgvnc = %{version}-%{release}
+%if "%{_rpmversion}" >= "5"
+BuildArch:	noarch
+%endif
 
 %description -n vala-gtk3-vnc
 Vala API for gtk-vnc library (GTK+ 3.x version).
@@ -282,8 +285,8 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version} \
 	$RPM_BUILD_ROOT%{_examplesdir}/python-%{name}-%{version}
 
-install examples/gvncviewer.{c,js} $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
-install examples/gvncviewer-{bindings,introspection}.py $RPM_BUILD_ROOT%{_examplesdir}/python-%{name}-%{version}
+cp -p examples/gvncviewer.{c,js} $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
+cp -p examples/gvncviewer-{bindings,introspection}.py $RPM_BUILD_ROOT%{_examplesdir}/python-%{name}-%{version}
 
 %{__rm} $RPM_BUILD_ROOT%{py_sitedir}/*.{la,a} \
 	$RPM_BUILD_ROOT%{_libdir}/*.la
