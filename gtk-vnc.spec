@@ -5,12 +5,12 @@
 Summary:	A GTK+ widget for VNC clients (GTK+ 2.x version)
 Summary(pl.UTF-8):	Widget GTK+ dla klientów VNC (wersja dla GTK+ 2.x)
 Name:		gtk-vnc
-Version:	0.5.4
-Release:	3
+Version:	0.7.0
+Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk-vnc/0.5/%{name}-%{version}.tar.xz
-# Source0-md5:	bc7b79c4b8124294dacf91b8128a158c
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk-vnc/0.7/%{name}-%{version}.tar.xz
+# Source0-md5:	cf55bce70ff1f7b1643468a001be1bef
 Patch0:		%{name}-codegen.patch
 URL:		http://live.gnome.org/gtk-vnc
 BuildRequires:	autoconf >= 2.63
@@ -21,7 +21,7 @@ BuildRequires:	gdk-pixbuf2-devel >= 2.10.0
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.28.0
 BuildRequires:	gnome-common
-BuildRequires:	gnutls-devel >= 1.4.0
+BuildRequires:	gnutls-devel >= 2.2.0
 BuildRequires:	gobject-introspection-devel >= 0.9.4
 BuildRequires:	gtk+2-devel >= 2:2.18.0
 BuildRequires:	gtk+3-devel >= 3.0.0
@@ -178,7 +178,7 @@ Summary(pl.UTF-8):	Biblioteka dla klientów VNC
 Group:		X11/Libraries
 Requires:	gdk-pixbuf2 >= 2.10.0
 Requires:	glib2 >= 1:2.28.0
-Requires:	gnutls >= 1.4.0
+Requires:	gnutls >= 2.2.0
 Requires:	libgcrypt >= 1.4.0
 
 %description -n libgvnc
@@ -194,7 +194,7 @@ Group:		X11/Development/Libraries
 Requires:	cyrus-sasl-devel
 Requires:	gdk-pixbuf2-devel >= 2.10.0
 Requires:	glib2-devel >= 1:2.28.0
-Requires:	gnutls-devel >= 1.4.0
+Requires:	gnutls-devel >= 2.2.0
 Requires:	libgcrypt-devel >= 1.4.0
 Requires:	libgvnc = %{version}-%{release}
 Requires:	zlib-devel
@@ -381,7 +381,9 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with vala}
 %files -n vala-libgvnc
 %defattr(644,root,root,755)
+%{_datadir}/vala/vapi/gvnc-1.0.deps
 %{_datadir}/vala/vapi/gvnc-1.0.vapi
+%{_datadir}/vala/vapi/gvncpulse-1.0.deps
 %{_datadir}/vala/vapi/gvncpulse-1.0.vapi
 %endif
 
