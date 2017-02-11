@@ -291,6 +291,9 @@ cp -p examples/gvncviewer-{bindings,introspection}.py $RPM_BUILD_ROOT%{_examples
 %{__rm} $RPM_BUILD_ROOT%{py_sitedir}/*.{la,a} \
 	$RPM_BUILD_ROOT%{_libdir}/*.la
 
+# not supported by glibc (as of 2.25)
+%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/guc
+
 %find_lang %{name}
 
 %clean
