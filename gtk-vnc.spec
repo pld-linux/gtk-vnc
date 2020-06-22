@@ -12,6 +12,7 @@ License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk-vnc/0.9/%{name}-%{version}.tar.xz
 # Source0-md5:	1eed0aa5d71f849eae9fa00ecf28e247
+Patch0:		%{name}-pc.patch
 URL:		https://wiki.gnome.org/Projects/gtk-vnc
 BuildRequires:	autoconf >= 2.63
 BuildRequires:	automake >= 1:1.10
@@ -232,6 +233,7 @@ Narzędzia linii poleceń do interakcji z serwerami VNC.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %{__sed} -i -e '1s,/usr/bin/python$,%{__python},' examples/gvncviewer.py
 
