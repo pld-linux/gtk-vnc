@@ -1,18 +1,18 @@
 #
 # Conditional build:
-%bcond_without	vala	# Vala API
+%bcond_without	static_libs	# static libraries
+%bcond_without	vala		# Vala API
 
 Summary:	A GTK+ widget for VNC clients (GTK+ 2.x version)
 Summary(pl.UTF-8):	Widget GTK+ dla klientów VNC (wersja dla GTK+ 2.x)
 Name:		gtk-vnc
-Version:	0.7.2
+Version:	0.8.0
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk-vnc/0.7/%{name}-%{version}.tar.xz
-# Source0-md5:	1d4f3e16ad82498add90b7aae43e766d
-Patch0:		%{name}-codegen.patch
-URL:		http://live.gnome.org/gtk-vnc
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk-vnc/0.8/%{name}-%{version}.tar.xz
+# Source0-md5:	86cfae4dc84b6b3a9a5d29151defab2e
+URL:		https://wiki.gnome.org/Projects/gtk-vnc
 BuildRequires:	autoconf >= 2.63
 BuildRequires:	automake >= 1:1.10
 BuildRequires:	cairo-devel >= 1.2.0
@@ -34,9 +34,7 @@ BuildRequires:	perl-Text-CSV
 BuildRequires:	perl-tools-pod
 BuildRequires:	pkgconfig
 BuildRequires:	pulseaudio-devel
-BuildRequires:	python-devel >= 1:2.4
-BuildRequires:	python-pygtk-devel >= 2:2.0.0
-BuildRequires:	rpm-pythonprov
+BuildRequires:	python3 >= 1:3
 BuildRequires:	tar >= 1:1.22
 %{?with_vala:BuildRequires:	vala >= 0.14.0}
 BuildRequires:	xorg-lib-libX11-devel
@@ -45,6 +43,7 @@ BuildRequires:	zlib-devel
 Requires:	cairo >= 1.2.0
 Requires:	gtk+2 >= 2:2.18.0
 Requires:	libgvnc = %{version}-%{release}
+Obsoletes:	python-gtk-vnc < 0.8.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -89,20 +88,6 @@ Static gtk-vnc library (GTK+ 2.x version).
 
 %description static -l pl.UTF-8
 Statyczna biblioteka gtk-vnc (wersja dla GTK+ 2.x).
-
-%package -n python-gtk-vnc
-Summary:	Python bindings for the gtk-vnc library (GTK+ 2.x version)
-Summary(pl.UTF-8):	Wiązania Pythona do biblioteki gtk-vnc (wersja dla GTK+ 2.x)
-Group:		Libraries/Python
-Requires:	%{name} = %{version}-%{release}
-
-%description -n python-gtk-vnc
-A module allowing use of the GTK+ VNC widget (GTK+ 2.x version) from
-Python.
-
-%description -n python-gtk-vnc -l pl.UTF-8
-Moduł pozwalający na używanie widgetu GTK+ VNC (w wersji dla GTK+ 2.x)
-z poziomu Pythona.
 
 %package -n gtk3-vnc
 Summary:	A GTK+ widget for VNC clients (GTK+ 3.x version)
@@ -162,7 +147,7 @@ Summary(pl.UTF-8):	API języka Vala dla biblioteki gtk-vnc (wersja dla GTK+3)
 Group:		Development/Languages
 Requires:	gtk3-vnc-devel = %{version}-%{release}
 Requires:	vala-libgvnc = %{version}-%{release}
-%if "%{_rpmversion}" >= "5"
+%if "%{_rpmversion}" >= "4.6"
 BuildArch:	noarch
 %endif
 
@@ -223,6 +208,9 @@ Summary(pl.UTF-8):	API języka Vala dla biblioteki libgvnc
 Group:		Development/Languages
 Requires:	libgvnc-devel = %{version}-%{release}
 Requires:	vala
+%if "%{_rpmversion}" >= "4.6"
+BuildArch:	noarch
+%endif
 
 %description -n vala-libgvnc
 Vala API for libgvnc library.
@@ -244,7 +232,8 @@ Narzędzia linii poleceń do interakcji z serwerami VNC.
 
 %prep
 %setup -q
-%patch0 -p1
+
+%{__sed} -i -e '1s,/usr/bin/python$,%{__python},' examples/gvncviewer.py
 
 %build
 %{__libtoolize}
@@ -259,16 +248,17 @@ cd gtk2
 ../%configure \
 	--with-gtk=2.0 \
 	--with-libview \
-	--enable-static \
+	%{?with_static_libs:--enable-static} \
 	--disable-plugin \
 	--disable-silent-rules
 %{__make}
+
 cd ../gtk3
 # libview not ported to gtk+3
 ../%configure \
 	--with-gtk=3.0 \
 	--without-libview \
-	--enable-static \
+	%{?with_static_libs:--enable-static} \
 	--disable-plugin \
 	--disable-silent-rules \
 	%{!?with_vala:--disable-vala}
@@ -279,17 +269,15 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} -C gtk2 -j1 install \
 	DESTDIR=$RPM_BUILD_ROOT
+
 %{__make} -C gtk3 -j1 install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version} \
-	$RPM_BUILD_ROOT%{_examplesdir}/python-%{name}-%{version}
+install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
-cp -p examples/gvncviewer.{c,js} $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
-cp -p examples/gvncviewer-{bindings,introspection}.py $RPM_BUILD_ROOT%{_examplesdir}/python-%{name}-%{version}
+cp -p examples/gvncviewer.{c,js,pl,py} $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
-%{__rm} $RPM_BUILD_ROOT%{py_sitedir}/*.{la,a} \
-	$RPM_BUILD_ROOT%{_libdir}/*.la
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
 # not supported by glibc (as of 2.25)
 %{__rm} -r $RPM_BUILD_ROOT%{_localedir}/guc
@@ -322,14 +310,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/%{name}-1.0.pc
 %{_examplesdir}/%{name}-%{version}
 
+%if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libgtk-vnc-1.0.a
-
-%files -n python-gtk-vnc
-%defattr(644,root,root,755)
-%attr(755,root,root) %{py_sitedir}/gtkvnc.so
-%{_examplesdir}/python-%{name}-%{version}
+%endif
 
 %files -n gtk3-vnc
 %defattr(644,root,root,755)
@@ -344,9 +329,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/gtk-vnc-2.0.pc
 %{_datadir}/gir-1.0/GtkVnc-2.0.gir
 
+%if %{with static_libs}
 %files -n gtk3-vnc-static
 %defattr(644,root,root,755)
 %{_libdir}/libgtk-vnc-2.0.a
+%endif
 
 %if %{with vala}
 %files -n vala-gtk3-vnc
@@ -376,10 +363,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/gvnc-1.0.pc
 %{_pkgconfigdir}/gvncpulse-1.0.pc
 
+%if %{with static_libs}
 %files -n libgvnc-static
 %defattr(644,root,root,755)
 %{_libdir}/libgvnc-1.0.a
 %{_libdir}/libgvncpulse-1.0.a
+%endif
 
 %if %{with vala}
 %files -n vala-libgvnc
