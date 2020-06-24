@@ -3,48 +3,37 @@
 %bcond_without	static_libs	# static libraries
 %bcond_without	vala		# Vala API
 
-Summary:	A GTK+ widget for VNC clients (GTK+ 2.x version)
-Summary(pl.UTF-8):	Widget GTK+ dla klientów VNC (wersja dla GTK+ 2.x)
+Summary:	A GTK+ widget for VNC clients
+Summary(pl.UTF-8):	Widget GTK+ dla klientów VNC
 Name:		gtk-vnc
-Version:	0.9.0
+Version:	1.0.0
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk-vnc/0.9/%{name}-%{version}.tar.xz
-# Source0-md5:	1eed0aa5d71f849eae9fa00ecf28e247
-Patch0:		%{name}-pc.patch
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk-vnc/1.0/%{name}-%{version}.tar.xz
+# Source0-md5:	ff2e531525f6200be613643b9ee87fbf
 URL:		https://wiki.gnome.org/Projects/gtk-vnc
-BuildRequires:	autoconf >= 2.63
-BuildRequires:	automake >= 1:1.10
 BuildRequires:	cairo-devel >= 1.2.0
-BuildRequires:	cyrus-sasl-devel
-BuildRequires:	gdk-pixbuf2-devel >= 2.10.0
+BuildRequires:	cyrus-sasl-devel >= 2.1.26
+BuildRequires:	gdk-pixbuf2-devel >= 2.12.0
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.42.0
-BuildRequires:	gnome-common
 BuildRequires:	gnutls-devel >= 3.1.18
 BuildRequires:	gobject-introspection-devel >= 0.9.4
-BuildRequires:	gtk+2-devel >= 2:2.18.0
 BuildRequires:	gtk+3-devel >= 3.0.0
-BuildRequires:	intltool >= 0.40.0
 BuildRequires:	libgcrypt-devel >= 1.5.0
-BuildRequires:	libgpg-error-devel
-BuildRequires:	libtool >= 2:2.2.6
-BuildRequires:	libview-devel >= 0.6.0
-BuildRequires:	perl-Text-CSV
+BuildRequires:	meson >= 0.46.0
+BuildRequires:	ninja >= 1.5
 BuildRequires:	perl-tools-pod
 BuildRequires:	pkgconfig
-BuildRequires:	pulseaudio-devel
+BuildRequires:	pulseaudio-devel >= 10.0
 BuildRequires:	python3 >= 1:3
+BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	tar >= 1:1.22
 %{?with_vala:BuildRequires:	vala >= 0.14.0}
-BuildRequires:	xorg-lib-libX11-devel
+BuildRequires:	xorg-lib-libX11-devel >= 1.6.5
 BuildRequires:	xz
-BuildRequires:	zlib-devel
-Requires:	cairo >= 1.2.0
-Requires:	gtk+2 >= 2:2.18.0
-Requires:	libgvnc = %{version}-%{release}
-Obsoletes:	python-gtk-vnc < 0.8.0
+BuildRequires:	zlib-devel >= 1.2.5
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -52,51 +41,19 @@ gtk-vnc is a VNC viewer widget for GTK+. It is built using coroutines
 allowing it to be completely asynchronous while remaining single
 threaded.
 
-This package contains version for GTK+ 2.x.
-
 %description -l pl.UTF-8
 gtk-vnc to widget przeglądarki VNC dla GTK+. Jest skonstruowany z
 użyciem korutyn, dzięki czemu mogą być w pełni asynchroniczne
 pozostając jednowątkowymi.
 
-Ten pakiet zawiera wersję dla GTK+ 2.x.
-
-%package devel
-Summary:	Header files for gtk-vnc library (GTK+ 2.x version)
-Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki gtk-vnc (wersja dla GTK+ 2.x)
-Group:		X11/Development/Libraries
-Requires:	%{name} = %{version}-%{release}
-Requires:	cairo-devel >= 1.2.0
-Requires:	gtk+2-devel >= 2:2.18.0
-Requires:	libgvnc-devel = %{version}-%{release}
-Requires:	xorg-lib-libX11-devel
-
-%description devel
-Header files for gtk-vnc library (GTK+ 2.x version).
-
-%description devel -l pl.UTF-8
-Pliki nagłówkowe biblioteki gtk-vnc (wersja dla GTK+ 2.x).
-
-%package static
-Summary:	Static gtk-vnc library (GTK+ 2.x version)
-Summary(pl.UTF-8):	Statyczna biblioteka gtk-vnc (wersja dla GTK+ 2.x)
-Group:		X11/Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
-Requires:	libgvnc-static = %{version}-%{release}
-
-%description static
-Static gtk-vnc library (GTK+ 2.x version).
-
-%description static -l pl.UTF-8
-Statyczna biblioteka gtk-vnc (wersja dla GTK+ 2.x).
-
 %package -n gtk3-vnc
 Summary:	A GTK+ widget for VNC clients (GTK+ 3.x version)
-Summary(pl.UTF-8):	Widget GTK+ dla klientów VNC
+Summary(pl.UTF-8):	Widget GTK+ dla klientów VNC (wersja GTK+ 3.x)
 Group:		X11/Libraries
 Requires:	cairo >= 1.2.0
 Requires:	gtk+3 >= 3.0.0
 Requires:	libgvnc = %{version}-%{release}
+Requires:	xorg-lib-libX11 >= 1.6.5
 
 %description -n gtk3-vnc
 gtk-vnc is a VNC viewer widget for GTK+. It is built using coroutines
@@ -121,7 +78,7 @@ Requires:	gtk+3-devel >= 3.0.0
 Requires:	gtk3-vnc = %{version}-%{release}
 Requires:	libgcrypt-devel >= 1.5.0
 Requires:	libgvnc-devel = %{version}-%{release}
-Requires:	xorg-lib-libX11-devel
+Requires:	xorg-lib-libX11-devel >= 1.6.5
 
 %description -n gtk3-vnc-devel
 Header files for gtk-vnc library (GTK+ 3.x version).
@@ -162,10 +119,13 @@ API języka Vala dla biblioteki gtk-vnc (wersja dla GTK+3).
 Summary:	A library for VNC clients
 Summary(pl.UTF-8):	Biblioteka dla klientów VNC
 Group:		X11/Libraries
-Requires:	gdk-pixbuf2 >= 2.10.0
+Requires:	cyrus-sasl-libs >= 2.1.26
+Requires:	gdk-pixbuf2 >= 2.12.0
 Requires:	glib2 >= 1:2.42.0
 Requires:	gnutls >= 3.1.18
 Requires:	libgcrypt >= 1.5.0
+Requires:	pulseaudio-libs >= 10.0
+Requires:	zlib >= 1.2.5
 
 %description -n libgvnc
 A library for VNC clients.
@@ -177,13 +137,13 @@ Biblioteka dla klientów VNC.
 Summary:	Header files for libgvnc library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki libgvnc
 Group:		X11/Development/Libraries
-Requires:	cyrus-sasl-devel
-Requires:	gdk-pixbuf2-devel >= 2.10.0
+Requires:	cyrus-sasl-devel >= 2.1.26
+Requires:	gdk-pixbuf2-devel >= 2.12.0
 Requires:	glib2-devel >= 1:2.42.0
 Requires:	gnutls-devel >= 3.1.18
 Requires:	libgcrypt-devel >= 1.5.0
 Requires:	libgvnc = %{version}-%{release}
-Requires:	zlib-devel
+Requires:	zlib-devel >= 1.2.5
 
 %description -n libgvnc-devel
 Header files for libgvnc library.
@@ -233,90 +193,35 @@ Narzędzia linii poleceń do interakcji z serwerami VNC.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %{__sed} -i -e '1s,/usr/bin/python$,%{__python},' examples/gvncviewer.py
 
 %build
-%{__libtoolize}
-%{__aclocal} -I m4
-%{__autoconf}
-%{__autoheader}
-%{__automake}
-# force enums regeneration
-touch src/vncconnection.h src/vncdisplay.h
-mkdir gtk{2,3}
-cd gtk2
-../%configure \
-	--with-gtk=2.0 \
-	--with-libview \
-	%{?with_static_libs:--enable-static} \
-	--disable-plugin \
-	--disable-silent-rules
-%{__make}
+%meson build
 
-cd ../gtk3
-# libview not ported to gtk+3
-../%configure \
-	--with-gtk=3.0 \
-	--without-libview \
-	%{?with_static_libs:--enable-static} \
-	--disable-plugin \
-	--disable-silent-rules \
-	%{!?with_vala:--disable-vala}
-%{__make}
+%ninja_build -C build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} -C gtk2 -j1 install \
-	DESTDIR=$RPM_BUILD_ROOT
+%ninja_install -C build
 
-%{__make} -C gtk3 -j1 install \
-	DESTDIR=$RPM_BUILD_ROOT
-
-install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
-
-cp -p examples/gvncviewer.{c,js,pl,py} $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
-
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
+install -d $RPM_BUILD_ROOT%{_examplesdir}/gtk3-vnc-%{version}
+cp -p examples/gvncviewer.{c,js,pl,py} $RPM_BUILD_ROOT%{_examplesdir}/gtk3-vnc-%{version}
 
 # not supported by glibc (as of 2.25)
 %{__rm} -r $RPM_BUILD_ROOT%{_localedir}/guc
 
-%find_lang %{name}
+%find_lang gtk-vnc
 
 %clean
 rm -rf $RPM_BUILD_ROOT
-
-%post	-p /sbin/ldconfig
-%postun	-p /sbin/ldconfig
 
 %post	-n gtk3-vnc -p /sbin/ldconfig
 %postun	-n gtk3-vnc -p /sbin/ldconfig
 
 %post	-n libgvnc -p /sbin/ldconfig
 %postun	-n libgvnc -p /sbin/ldconfig
-
-%files
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libgtk-vnc-1.0.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgtk-vnc-1.0.so.0
-%{_libdir}/girepository-1.0/GtkVnc-1.0.typelib
-
-%files devel
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libgtk-vnc-1.0.so
-%{_includedir}/%{name}-1.0
-%{_datadir}/gir-1.0/GtkVnc-1.0.gir
-%{_pkgconfigdir}/%{name}-1.0.pc
-%{_examplesdir}/%{name}-%{version}
-
-%if %{with static_libs}
-%files static
-%defattr(644,root,root,755)
-%{_libdir}/libgtk-vnc-1.0.a
-%endif
 
 %files -n gtk3-vnc
 %defattr(644,root,root,755)
@@ -328,8 +233,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libgtk-vnc-2.0.so
 %{_includedir}/gtk-vnc-2.0
-%{_pkgconfigdir}/gtk-vnc-2.0.pc
 %{_datadir}/gir-1.0/GtkVnc-2.0.gir
+%{_pkgconfigdir}/gtk-vnc-2.0.pc
+%{_examplesdir}/gtk3-vnc-%{version}
 
 %if %{with static_libs}
 %files -n gtk3-vnc-static
@@ -344,7 +250,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/vala/vapi/gtk-vnc-2.0.vapi
 %endif
 
-%files -n libgvnc -f %{name}.lang
+%files -n libgvnc -f gtk-vnc.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog NEWS README
 %attr(755,root,root) %{_libdir}/libgvnc-1.0.so.*.*.*
