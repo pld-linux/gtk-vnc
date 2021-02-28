@@ -105,9 +105,7 @@ Summary(pl.UTF-8):	API języka Vala dla biblioteki gtk-vnc (wersja dla GTK+3)
 Group:		Development/Languages
 Requires:	gtk3-vnc-devel = %{version}-%{release}
 Requires:	vala-libgvnc = %{version}-%{release}
-%if "%{_rpmversion}" >= "4.6"
 BuildArch:	noarch
-%endif
 
 %description -n vala-gtk3-vnc
 Vala API for gtk-vnc library (GTK+ 3.x version).
@@ -169,9 +167,7 @@ Summary(pl.UTF-8):	API języka Vala dla biblioteki libgvnc
 Group:		Development/Languages
 Requires:	libgvnc-devel = %{version}-%{release}
 Requires:	vala
-%if "%{_rpmversion}" >= "4.6"
 BuildArch:	noarch
-%endif
 
 %description -n vala-libgvnc
 Vala API for libgvnc library.
