@@ -6,34 +6,35 @@
 Summary:	A GTK+ widget for VNC clients
 Summary(pl.UTF-8):	Widget GTK+ dla klientów VNC
 Name:		gtk-vnc
-Version:	1.0.0
+Version:	1.2.0
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gtk-vnc/1.0/%{name}-%{version}.tar.xz
-# Source0-md5:	ff2e531525f6200be613643b9ee87fbf
+Source0:	https://download.gnome.org/sources/gtk-vnc/1.2/%{name}-%{version}.tar.xz
+# Source0-md5:	37c36412593d73f6a090b4545d1b0364
 URL:		https://wiki.gnome.org/Projects/gtk-vnc
-BuildRequires:	cairo-devel >= 1.2.0
-BuildRequires:	cyrus-sasl-devel >= 2.1.26
-BuildRequires:	gdk-pixbuf2-devel >= 2.12.0
+BuildRequires:	cairo-devel >= 1.15.0
+BuildRequires:	cyrus-sasl-devel >= 2.1.27
+BuildRequires:	gdk-pixbuf2-devel >= 2.36.0
 BuildRequires:	gettext-tools
-BuildRequires:	glib2-devel >= 1:2.42.0
-BuildRequires:	gnutls-devel >= 3.1.18
-BuildRequires:	gobject-introspection-devel >= 0.9.4
-BuildRequires:	gtk+3-devel >= 3.0.0
-BuildRequires:	libgcrypt-devel >= 1.5.0
-BuildRequires:	meson >= 0.46.0
+BuildRequires:	glib2-devel >= 1:2.56.0
+BuildRequires:	gnutls-devel >= 3.6.0
+BuildRequires:	gobject-introspection-devel >= 1.56.0
+BuildRequires:	gtk+3-devel >= 3.22.0
+BuildRequires:	libgcrypt-devel >= 1.8.0
+BuildRequires:	meson >= 0.49.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	perl-tools-pod
 BuildRequires:	pkgconfig
-BuildRequires:	pulseaudio-devel >= 10.0
+BuildRequires:	pulseaudio-devel >= 11.0
 BuildRequires:	python3 >= 1:3
+BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	tar >= 1:1.22
 %{?with_vala:BuildRequires:	vala >= 0.14.0}
 BuildRequires:	xorg-lib-libX11-devel >= 1.6.5
 BuildRequires:	xz
-BuildRequires:	zlib-devel >= 1.2.5
+BuildRequires:	zlib-devel >= 1.2.11
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -50,8 +51,8 @@ pozostając jednowątkowymi.
 Summary:	A GTK+ widget for VNC clients (GTK+ 3.x version)
 Summary(pl.UTF-8):	Widget GTK+ dla klientów VNC (wersja GTK+ 3.x)
 Group:		X11/Libraries
-Requires:	cairo >= 1.2.0
-Requires:	gtk+3 >= 3.0.0
+Requires:	cairo >= 1.15.0
+Requires:	gtk+3 >= 3.22.0
 Requires:	libgvnc = %{version}-%{release}
 Requires:	xorg-lib-libX11 >= 1.6.5
 
@@ -73,10 +74,10 @@ Ten pakiet zawiera wersję dla GTK+ 3.x.
 Summary:	Header files for gtk-vnc library (GTK+ 3.x version)
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki gtk-vnc (wersja dla GTK+ 3.x)
 Group:		X11/Development/Libraries
-Requires:	cairo-devel >= 1.2.0
-Requires:	gtk+3-devel >= 3.0.0
+Requires:	cairo-devel >= 1.15.0
+Requires:	gtk+3-devel >= 3.22.0
 Requires:	gtk3-vnc = %{version}-%{release}
-Requires:	libgcrypt-devel >= 1.5.0
+Requires:	libgcrypt-devel >= 1.8.0
 Requires:	libgvnc-devel = %{version}-%{release}
 Requires:	xorg-lib-libX11-devel >= 1.6.5
 
@@ -117,13 +118,13 @@ API języka Vala dla biblioteki gtk-vnc (wersja dla GTK+3).
 Summary:	A library for VNC clients
 Summary(pl.UTF-8):	Biblioteka dla klientów VNC
 Group:		X11/Libraries
-Requires:	cyrus-sasl-libs >= 2.1.26
-Requires:	gdk-pixbuf2 >= 2.12.0
-Requires:	glib2 >= 1:2.42.0
-Requires:	gnutls >= 3.1.18
-Requires:	libgcrypt >= 1.5.0
-Requires:	pulseaudio-libs >= 10.0
-Requires:	zlib >= 1.2.5
+Requires:	cyrus-sasl-libs >= 2.1.27
+Requires:	gdk-pixbuf2 >= 2.36.0
+Requires:	glib2 >= 1:2.56.0
+Requires:	gnutls >= 3.6.0
+Requires:	libgcrypt >= 1.8.0
+Requires:	pulseaudio-libs >= 11.0
+Requires:	zlib >= 1.2.11
 
 %description -n libgvnc
 A library for VNC clients.
@@ -135,13 +136,13 @@ Biblioteka dla klientów VNC.
 Summary:	Header files for libgvnc library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki libgvnc
 Group:		X11/Development/Libraries
-Requires:	cyrus-sasl-devel >= 2.1.26
-Requires:	gdk-pixbuf2-devel >= 2.12.0
-Requires:	glib2-devel >= 1:2.42.0
-Requires:	gnutls-devel >= 3.1.18
-Requires:	libgcrypt-devel >= 1.5.0
+Requires:	cyrus-sasl-devel >= 2.1.27
+Requires:	gdk-pixbuf2-devel >= 2.36.0
+Requires:	glib2-devel >= 1:2.56.0
+Requires:	gnutls-devel >= 3.6.0
+Requires:	libgcrypt-devel >= 1.8.0
 Requires:	libgvnc = %{version}-%{release}
-Requires:	zlib-devel >= 1.2.5
+Requires:	zlib-devel >= 1.2.11
 
 %description -n libgvnc-devel
 Header files for libgvnc library.
@@ -248,7 +249,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n libgvnc -f gtk-vnc.lang
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog NEWS README
+%doc AUTHORS ChangeLog MAINTAINERS NEWS README
 %attr(755,root,root) %{_libdir}/libgvnc-1.0.so.*.*.*
 %attr(755,root,root) %{_libdir}/libgvncpulse-1.0.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libgvnc-1.0.so.0
