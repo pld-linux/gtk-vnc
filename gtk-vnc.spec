@@ -6,12 +6,12 @@
 Summary:	A GTK+ widget for VNC clients
 Summary(pl.UTF-8):	Widget GTK+ dla klientów VNC
 Name:		gtk-vnc
-Version:	1.2.0
+Version:	1.3.0
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	https://download.gnome.org/sources/gtk-vnc/1.2/%{name}-%{version}.tar.xz
-# Source0-md5:	37c36412593d73f6a090b4545d1b0364
+Source0:	https://download.gnome.org/sources/gtk-vnc/1.3/%{name}-%{version}.tar.xz
+# Source0-md5:	2f8be9b1e2e2ca746cb1648deecb773a
 URL:		https://wiki.gnome.org/Projects/gtk-vnc
 BuildRequires:	cairo-devel >= 1.15.0
 BuildRequires:	cyrus-sasl-devel >= 2.1.27
