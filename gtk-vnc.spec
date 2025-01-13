@@ -1,35 +1,37 @@
 #
 # Conditional build:
+%bcond_without	apidocs		# API documentation
 %bcond_without	static_libs	# static libraries
 %bcond_without	vala		# Vala API
 
 Summary:	A GTK+ widget for VNC clients
 Summary(pl.UTF-8):	Widget GTK+ dla klientów VNC
 Name:		gtk-vnc
-Version:	1.3.1
+Version:	1.4.0
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	https://download.gnome.org/sources/gtk-vnc/1.3/%{name}-%{version}.tar.xz
-# Source0-md5:	27f0dc7f33cbfdaa6c9eb7cf169f4866
+Source0:	https://download.gnome.org/sources/gtk-vnc/1.4/%{name}-%{version}.tar.xz
+# Source0-md5:	38bcbb0c646747be2f1d7f46ef5ef5f5
 URL:		https://wiki.gnome.org/Projects/gtk-vnc
 BuildRequires:	cairo-devel >= 1.15.0
 BuildRequires:	cyrus-sasl-devel >= 2.1.27
 BuildRequires:	gdk-pixbuf2-devel >= 2.36.0
 BuildRequires:	gettext-tools
+%{?with_apidocs:BuildRequires:	gi-docgen}
 BuildRequires:	glib2-devel >= 1:2.56.0
+BuildRequires:	gmp-devel >= 6.0.0
 BuildRequires:	gnutls-devel >= 3.6.0
 BuildRequires:	gobject-introspection-devel >= 1.56.0
 BuildRequires:	gtk+3-devel >= 3.22.0
-BuildRequires:	libgcrypt-devel >= 1.8.0
-BuildRequires:	meson >= 0.49.0
+BuildRequires:	meson >= 0.56.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	perl-tools-pod
 BuildRequires:	pkgconfig
 BuildRequires:	pulseaudio-devel >= 11.0
 BuildRequires:	python3 >= 1:3
 BuildRequires:	rpm-build >= 4.6
-BuildRequires:	rpmbuild(macros) >= 1.736
+BuildRequires:	rpmbuild(macros) >= 2.029
 BuildRequires:	tar >= 1:1.22
 %{?with_vala:BuildRequires:	vala >= 0.14.0}
 BuildRequires:	xorg-lib-libX11-devel >= 1.6.5
@@ -77,7 +79,6 @@ Group:		X11/Development/Libraries
 Requires:	cairo-devel >= 1.15.0
 Requires:	gtk+3-devel >= 3.22.0
 Requires:	gtk3-vnc = %{version}-%{release}
-Requires:	libgcrypt-devel >= 1.8.0
 Requires:	libgvnc-devel = %{version}-%{release}
 Requires:	xorg-lib-libX11-devel >= 1.6.5
 
@@ -114,6 +115,18 @@ Vala API for gtk-vnc library (GTK+ 3.x version).
 %description -n vala-gtk3-vnc -l pl.UTF-8
 API języka Vala dla biblioteki gtk-vnc (wersja dla GTK+3).
 
+%package -n gtk3-vnc-apidocs
+Summary:	API documentation for gtk-vnc library
+Summary(pl.UTF-8):	Dokumentacja API biblioteki gtk-vnc
+Group:		Documentation
+BuildArch:	noarch
+
+%description -n gtk3-vnc-apidocs
+API documentation for gtk-vnc library.
+
+%description -n gtk3-vnc-apidocs -l pl.UTF-8
+Dokumentacja API biblioteki gtk-vnc.
+
 %package -n libgvnc
 Summary:	A library for VNC clients
 Summary(pl.UTF-8):	Biblioteka dla klientów VNC
@@ -121,8 +134,8 @@ Group:		X11/Libraries
 Requires:	cyrus-sasl-libs >= 2.1.27
 Requires:	gdk-pixbuf2 >= 2.36.0
 Requires:	glib2 >= 1:2.56.0
+Requires:	gmp >= 6.0.0
 Requires:	gnutls >= 3.6.0
-Requires:	libgcrypt >= 1.8.0
 Requires:	pulseaudio-libs >= 11.0
 Requires:	zlib >= 1.2.11
 
@@ -139,8 +152,8 @@ Group:		X11/Development/Libraries
 Requires:	cyrus-sasl-devel >= 2.1.27
 Requires:	gdk-pixbuf2-devel >= 2.36.0
 Requires:	glib2-devel >= 1:2.56.0
+Requires:	gmp-devel >= 6.0.0
 Requires:	gnutls-devel >= 3.6.0
-Requires:	libgcrypt-devel >= 1.8.0
 Requires:	libgvnc = %{version}-%{release}
 Requires:	zlib-devel >= 1.2.11
 
@@ -176,6 +189,18 @@ Vala API for libgvnc library.
 %description -n vala-libgvnc -l pl.UTF-8
 API języka Vala dla biblioteki libgvnc.
 
+%package -n libgvnc-apidocs
+Summary:	API documentation for libgvnc library
+Summary(pl.UTF-8):	Dokumentacja API biblioteki libgvnc
+Group:		Documentation
+BuildArch:	noarch
+
+%description -n libgvnc-apidocs
+API documentation for libgvnc library.
+
+%description -n libgvnc-apidocs -l pl.UTF-8
+Dokumentacja API biblioteki libgvnc.
+
 %package tools
 Summary:	Command line tools for VNC
 Summary(pl.UTF-8):	Narzędzia linii poleceń dla VNC
@@ -194,7 +219,8 @@ Narzędzia linii poleceń do interakcji z serwerami VNC.
 %{__sed} -i -e '1s,/usr/bin/python$,%{__python},' examples/gvncviewer.py
 
 %build
-%meson build
+%meson build \
+	%{!?with_apidocs:-Dgi-docs=false}
 
 %ninja_build -C build
 
@@ -206,8 +232,14 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_examplesdir}/gtk3-vnc-%{version}
 cp -p examples/gvncviewer.{c,js,pl,py} $RPM_BUILD_ROOT%{_examplesdir}/gtk3-vnc-%{version}
 
-# not supported by glibc (as of 2.25)
-%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/guc
+%if %{with apidocs}
+install -d $RPM_BUILD_ROOT%{_gidocdir}
+%{__mv} $RPM_BUILD_ROOT%{_docdir}/{gtk-vnc,gvnc} $RPM_BUILD_ROOT%{_gidocdir}
+%{__rm} $RPM_BUILD_ROOT%{_docdir}/*.toml
+%endif
+
+# not supported by glibc (as of 2.40)
+%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/{guc,ie}
 
 %find_lang gtk-vnc
 
@@ -247,6 +279,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/vala/vapi/gtk-vnc-2.0.vapi
 %endif
 
+%if %{with apidocs}
+%files -n gtk3-vnc-apidocs
+%defattr(644,root,root,755)
+%{_gidocdir}/gtk-vnc
+%endif
+
 %files -n libgvnc -f gtk-vnc.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog MAINTAINERS NEWS README
@@ -282,6 +320,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/vala/vapi/gvnc-1.0.vapi
 %{_datadir}/vala/vapi/gvncpulse-1.0.deps
 %{_datadir}/vala/vapi/gvncpulse-1.0.vapi
+%endif
+
+%if %{with apidocs}
+%files -n libgvnc-apidocs
+%defattr(644,root,root,755)
+%{_gidocdir}/gvnc
 %endif
 
 %files tools
