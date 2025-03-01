@@ -7,12 +7,12 @@
 Summary:	A GTK+ widget for VNC clients
 Summary(pl.UTF-8):	Widget GTK+ dla klientów VNC
 Name:		gtk-vnc
-Version:	1.4.0
+Version:	1.5.0
 Release:	1
 License:	LGPL v2+
 Group:		X11/Libraries
-Source0:	https://download.gnome.org/sources/gtk-vnc/1.4/%{name}-%{version}.tar.xz
-# Source0-md5:	38bcbb0c646747be2f1d7f46ef5ef5f5
+Source0:	https://download.gnome.org/sources/gtk-vnc/1.5/%{name}-%{version}.tar.xz
+# Source0-md5:	6e9815e7960636e95f626a3f164eb01d
 URL:		https://wiki.gnome.org/Projects/gtk-vnc
 BuildRequires:	cairo-devel >= 1.15.0
 BuildRequires:	cyrus-sasl-devel >= 2.1.27
@@ -31,7 +31,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	pulseaudio-devel >= 11.0
 BuildRequires:	python3 >= 1:3
 BuildRequires:	rpm-build >= 4.6
-BuildRequires:	rpmbuild(macros) >= 2.029
+BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	tar >= 1:1.22
 %{?with_vala:BuildRequires:	vala >= 0.14.0}
 BuildRequires:	xorg-lib-libX11-devel >= 1.6.5
@@ -219,15 +219,15 @@ Narzędzia linii poleceń do interakcji z serwerami VNC.
 %{__sed} -i -e '1s,/usr/bin/python$,%{__python},' examples/gvncviewer.py
 
 %build
-%meson build \
+%meson \
 	%{!?with_apidocs:-Dgi-docs=false}
 
-%ninja_build -C build
+%meson_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%ninja_install -C build
+%meson_install
 
 install -d $RPM_BUILD_ROOT%{_examplesdir}/gtk3-vnc-%{version}
 cp -p examples/gvncviewer.{c,js,pl,py} $RPM_BUILD_ROOT%{_examplesdir}/gtk3-vnc-%{version}
