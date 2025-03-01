@@ -13,7 +13,7 @@ License:	LGPL v2+
 Group:		X11/Libraries
 Source0:	https://download.gnome.org/sources/gtk-vnc/1.5/%{name}-%{version}.tar.xz
 # Source0-md5:	6e9815e7960636e95f626a3f164eb01d
-URL:		https://wiki.gnome.org/Projects/gtk-vnc
+URL:		https://gitlab.gnome.org/GNOME/gtk-vnc
 BuildRequires:	cairo-devel >= 1.15.0
 BuildRequires:	cyrus-sasl-devel >= 2.1.27
 BuildRequires:	gdk-pixbuf2-devel >= 2.36.0
