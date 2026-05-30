@@ -220,7 +220,7 @@ Narzędzia linii poleceń do interakcji z serwerami VNC.
 
 %build
 %meson \
-	%{!?with_apidocs:-Dgi-docs=false}
+	%{!?with_apidocs:-Dgi-docs=disabled}
 
 %meson_build
 
